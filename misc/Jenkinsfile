@@ -7,7 +7,6 @@ node {
   }
   stage('test') {
     nodejs(nodeJSInstallationName: 'nodejs') {
-      sh 'apk add nodejs'
       sh 'npm install --only=dev'
       sh 'npm test'
     }
