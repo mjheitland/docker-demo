@@ -15,8 +15,10 @@ node {
     }
   }
   stage('docker build/push') {
-    docker.withRegistry('', 'dockerhub') {
+    docker.withRegistry('', 'dockerhub') { // connect to Dockerhub, user name + pw are stored in Jenkins under 'dockerhub'
+      sh 'echo 1'
       def app = docker.build("mjheitland/docker-nodejs-demo:${commit_id}", '.').push()
+      sh 'echo 2'
     }
   }
 }
