@@ -1,29 +1,26 @@
 node {
-  // def commit_id
-  // stage('Preparation') {
-  //   checkout scm
-  //   sh "echo $PATH"
-  //   sh "git rev-parse --short HEAD > .git/commit-id"                        
-  //   commit_id = readFile('.git/commit-id').trim()
-  //   sh "echo 'commit_id: ' $commit_id"
-  // }
-  // stage('test') {
-  //   // nodejs('nodejs') {
-  //   nodejs(nodeJSInstallationName: 'nodejs') {
-  //     sh 'npm install --only=dev'
-  //     sh 'npm test'
-  //   }
-  // }
+  def commit_id
+  stage('Preparation') {
+    checkout scm
+    sh "echo $PATH"
+    sh "git rev-parse --short HEAD > .git/commit-id"                        
+    commit_id = readFile('.git/commit-id').trim()
+    sh "echo 'commit_id: ' $commit_id"
+  }
+  stage('test') {
+    sh 'npm --version'
+    nodejs(nodeJSInstallationName: 'nodejs') {
+      sh 'npm install --only=dev'
+      sh 'npm test'
+    }
+  }
   stage('docker build/push') {
-    sh 'echo 0'
-    sh 'docker --version'
-    docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') { // connect to Dockerhub, user name + pw are stored in Jenkins under 'dockerhub'
-      sh 'echo 1'
-      //def customImage = docker.build("mjheitland/docker-nodejs-demo:${commit_id}", '.')
-      def customImage = docker.build("mjheitland/docker-nodejs-demo", '.')
-      sh 'echo 2'
+    docker.withRegistry('', 'dockerhub') { // connect to Dockerhub, user name + pw are stored in Jenkins under 'dockerhub'
+      sh 'echo build/push 1'
+      def customImage = docker.build("mjheitland/docker-nodejs-demo:${commit_id}", '.')
+      sh 'echo build/push 2'
       customImage.push()
-      sh 'echo 3'
+      sh 'echo build/push 3'
     }
   }
 }
