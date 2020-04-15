@@ -1,3 +1,7 @@
+// if nodejs is not there, remote into jenkins container and install it:
+//   docker exec -it -u root jenkins bash
+//   addgroup jenkins docker
+//   apt add nodejs
 node {
   def commit_id
   stage('Preparation') {
