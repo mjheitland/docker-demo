@@ -15,7 +15,7 @@ node {
   //   }
   // }
   stage('docker build/push') {
-    docker.withRegistry('', 'dockerhub') { // connect to Dockerhub, user name + pw are stored in Jenkins under 'dockerhub'
+    docker.withRegistry('mjheitland/docker-nodejs-demo', 'dockerhub') { // connect to Dockerhub, user name + pw are stored in Jenkins under 'dockerhub'
       sh 'echo 1'
       //def customImage = docker.build("mjheitland/docker-nodejs-demo:${commit_id}", '.')
       def customImage = docker.build("mjheitland/docker-nodejs-demo", '.')
