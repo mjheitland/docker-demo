@@ -6,11 +6,6 @@ node {
   //    commit_id = readFile('.git/commit-id').trim()
   //  }
   stage('test') {
-    sh 'whoami'
-    sh 'pwd'
-    sh "echo $PATH"
-    sh "apk add nodejs"
-    sh "npm install"
     nodejs(nodeJSInstallationName: 'nodejs') {
       sh 'npm install --only=dev'
       sh 'npm test'
