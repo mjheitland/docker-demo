@@ -9,6 +9,7 @@ node {
     sh 'whoami'
     sh 'pwd'
     sh "echo $PATH"
+    sh 'usermod -a -G sudo jenkins'
     sh "sudo apk add nodejs"
     sh "npm install"
     nodejs(nodeJSInstallationName: 'nodejs') {
