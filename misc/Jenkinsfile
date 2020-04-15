@@ -6,9 +6,10 @@ node {
   //    commit_id = readFile('.git/commit-id').trim()
   //  }
   stage('test') {
-    sh 'cat /etc/sudoers'
-    sh "sudo apk add nodejs"
+    sh 'whoami'
+    sh 'pwd'
     sh "echo $PATH"
+    sh "sudo apk add nodejs"
     sh "npm install"
     nodejs(nodeJSInstallationName: 'nodejs') {
       sh 'npm install --only=dev'
